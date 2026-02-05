@@ -1,14 +1,17 @@
-# Full Stack IDEs Landscape (2025)
+           # Full Stack IDEs Landscape (2025)
 
 Based on recent industry trends and developer surveys, here is a summary of the most popular Full Stack IDEs and editors available.
-
+אהלן
 ## Top Choices
+#שלום לכולם
 
+TODO:add new line
+Capybara is cute, i agree <3> +1 <if you know, it shits cubes><^_^Baby shark todododododo baby shark tododododoo baby>
 ### 1. Visual Studio Code (VS Code)
 *   **Best for:** Most developers (General Purpose).
 *   **Overview:** Used by ~76% of developers. It is a lightweight editor that acts like an IDE through extensions.
 *   **Pros:** Free, huge ecosystem (extensions), great performance, highly customizable.
-*   **Cons:** Can get slow with too many extensions; requires setup to be "IDE-like".
+*   **Cons:** Can get slow with too many extensions; requires setup to be "IDE-like" wow.
 
 ### 2. IntelliJ IDEA (Ultimate)
 *   **Best for:** Java/Kotlin backends + Modern Frontends.
