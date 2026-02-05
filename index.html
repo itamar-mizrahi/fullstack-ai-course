@@ -1,12 +1,191 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Search | Fullstack AI</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --glow: rgba(59, 130, 246, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 1.125rem;
+            background-color: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--accent);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+    <h1>Explore Projects</h1>
 
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search projects by title, description or tags..." autofocus>
+    </div>
+
+    <div class="projects-grid" id="resultsContainer">
+        <!-- Results will be injected here -->
+    </div>
+
+    <script src="TalSearchbar.js"></script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const resultsContainer = document.getElementById('resultsContainer');
+
+        function renderProjects(projectsToRender) {
+            resultsContainer.innerHTML = '';
+            
+            if (projectsToRender.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-results">No projects found matching your search.</div>';
+                return;
+            }
+
+            projectsToRender.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                
+                const tagsHtml = project.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                
+                card.innerHTML = `
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="tags">${tagsHtml}</div>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        // Initial render
+        renderProjects(projects);
+
+        // Search event listener
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+            const filteredProjects = searchProjects(query);
+            renderProjects(filteredProjects);
+        });
+    </script>
 </body>
-</html> 
+</html>
