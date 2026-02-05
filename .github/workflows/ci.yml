@@ -1,59 +1,21 @@
-name: CI Pipeline
+name: Node.js CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main, develop ]
-  workflow_dispatch:
+    branches: [ main, master ]
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-      if: hashFiles('package.json') != ''
-    
-    - name: Run linter
-      run: npm run lint
-      if: hashFiles('package.json') != ''
-      continue-on-error: true
-    
-    - name: Run tests
-      run: npm test
-      if: hashFiles('package.json') != ''
-      continue-on-error: true
-    
-    - name: Build project
-      run: npm run build
-      if: hashFiles('package.json') != ''
-      continue-on-error: true
+  build:
 
-  security-scan:
-    name: Security Scan
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Run security audit
-      run: npm audit --audit-level=moderate
-      if: hashFiles('package.json') != ''
-      continue-on-error: true
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+    - run: npm ci
+    - run: npm test
