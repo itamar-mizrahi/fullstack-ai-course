@@ -1,0 +1,61 @@
+:root{
+  --bg1: #0f172a;
+  --card: rgba(255,255,255,0.06);
+  --accent1: #7c3aed;
+  --accent2: #06b6d4;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background: linear-gradient(180deg,#071025 0%, #071025 60%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.bg{position:fixed;inset:0;z-index:0;}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.85;transform:translate3d(0,0,0)}
+.b1{width:420px;height:420px;left:-10%;top:-10%;background:linear-gradient(135deg,var(--accent1),#ec4899);animation:move1 8s ease-in-out infinite}
+.b2{width:360px;height:360px;right:-8%;top:8%;background:linear-gradient(135deg,var(--accent2),#60a5fa);animation:move2 10s ease-in-out infinite}
+.b3{width:280px;height:280px;left:30%;bottom:-12%;background:linear-gradient(135deg,#f97316,#f59e0b);animation:move3 9s ease-in-out infinite}
+@keyframes move1{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(40px) rotate(20deg)}100%{transform:translateY(0) rotate(0deg)}}
+@keyframes move2{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(-18deg)}100%{transform:translateY(0) rotate(0deg)}}
+@keyframes move3{0%{transform:translateX(0) rotate(0deg)}50%{transform:translateX(-30px) rotate(12deg)}100%{transform:translateX(0) rotate(0deg)}}
+
+.login-card{
+  position:relative;
+  z-index:2;
+  width:360px;
+  max-width:92%;
+  padding:36px 28px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  box-shadow: 0 10px 30px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+  color:#e6eef8;
+  transform:translateY(20px);
+  animation:pop .6s cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes pop{0%{opacity:0;transform:translateY(30px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.login-card h2{margin:0 0 14px 0;font-weight:600}
+.input-group{position:relative;margin:18px 0}
+.input-group input{
+  width:100%;padding:14px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;outline:none;font-size:14px;
+  transition:box-shadow .18s, border-color .18s;
+}
+.input-group input:focus{box-shadow:0 6px 18px rgba(12,20,40,0.45);border-color:rgba(124,58,237,0.9)}
+.input-group label{
+  position:absolute;left:12px;top:12px;pointer-events:none;color:rgba(227,235,255,0.7);transition:transform .18s, font-size .18s, top .18s;transform-origin:left top;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{transform:translateY(-10px) scale(.86);top:6px;color:rgba(227,235,255,0.9)}
+.btn{display:block;width:100%;padding:12px 14px;margin-top:6px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:600;cursor:pointer;box-shadow:0 8px 20px rgba(12,20,40,0.45);transition:transform .12s,filter .12s}
+.btn:active{transform:translateY(1px)}
+.small-links{margin-top:12px;text-align:center}
+.small-links a{color:rgba(226,240,255,0.75);text-decoration:none;font-size:13px}
+
+.login-card.success{animation:shake .6s linear both}
+@keyframes shake{10%{transform:translateX(-6px)}30%{transform:translateX(6px)}50%{transform:translateX(-4px)}70%{transform:translateX(4px)}100%{transform:translateX(0)}}
+
+@media (max-width:420px){.login-card{padding:24px}}
